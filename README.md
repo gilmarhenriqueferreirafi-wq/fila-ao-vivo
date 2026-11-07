@@ -1,30 +1,58 @@
 # Fila ao Vivo — YouTube
 
-Servidor local para uma sala adicionar vídeos do YouTube à fila usando celulares ou outros dispositivos conectados à mesma rede Wi-Fi.
+Servidor local para controlar uma fila de músicas do YouTube em tempo real. Pessoas conectadas à mesma rede Wi-Fi podem adicionar músicas pelo celular, enquanto o computador controla a reprodução.
 
-## Rodar
+## O que instalar
 
-Para iniciar pelo Windows, execute `iniciar-fila.cmd`. Ele só pede administrador na primeira vez, para liberar a porta 8080 no Firewall.
+No Windows, execute `iniciar-fila.cmd`. O assistente verifica se o Python existe e oferece instalar pelo `winget` caso esteja ausente. Depois ele oferece atualizar o `pip` e instalar/atualizar as dependências do projeto.
+
+Todas essas etapas são perguntadas com `(y,n)`. Responder `y` é obrigatório para a função correspondente funcionar:
+
+- Python: obrigatório para executar o servidor.
+- pip: obrigatório para instalar as dependências.
+- Dependências: obrigatório para pesquisa no YouTube e geração dos QR codes.
+- Firewall: obrigatório para acessar pelo celular na rede Wi-Fi; pode ser recusado se for usar somente o PC.
+
+## Executar manualmente
 
 ```powershell
 cd C:\Users\gilma\Projects\03-python-e-bots\youtube-fila
-py -m pip install -r requirements.txt
+py -m pip install --upgrade pip
+py -m pip install --upgrade -r requirements.txt
 py app.py
 ```
 
-Para gerar também um QR que conecta o celular ao Wi‑Fi:
+Para gerar também um QR code que conecta o celular ao Wi-Fi:
 
 ```powershell
 py app.py --wifi-name "Minha Rede" --wifi-password "minha-senha"
 ```
 
-Abra o endereço `Celulares` mostrado no terminal no celular. O painel principal fica em `http://localhost:8080/`.
+## Endereços
 
-Se o celular não conectar, permita o Python no Firewall do Windows e confirme que os dispositivos estão na mesma rede (não na rede de convidados). A fila é mantida em memória e volta vazia quando o servidor é encerrado.
+- `http://localhost:8080/`: painel principal para reproduzir e administrar a fila.
+- `http://localhost:8080/remote`: controle remoto para celulares adicionarem músicas.
+- `http://localhost:8080/painel`: painel compacto com capa, progresso e modo tela cheia.
 
-## Modos de reprodução
+O endereço acessível pelos celulares é mostrado no terminal como `Celulares`. Os dispositivos precisam estar na mesma rede Wi-Fi, e não em uma rede de convidados.
 
-- **Contínua** repete a fila ao chegar ao fim.
-- **Alternada** escolhe aleatoriamente a próxima música.
-- **Autoplay** avança quando o vídeo atual termina.
-- **Música surpresa** pesquisa uma música no YouTube quando a fila chega ao fim.
+## Recursos
+
+- Pesquisa e adição de músicas pelo celular e pelo PC.
+- Fila compartilhada em tempo real.
+- Seleção, remoção e reordenação por setas; arrastar disponível no PC.
+- Reprodução contínua, aleatória, autoplay e busca automática de artistas brasileiros por gênero.
+- Qualidade de vídeo e modo somente áudio no PC.
+- Histórico JSON das configurações em `config_history.json`.
+- API de estado, reprodução atual e progresso.
+
+## Dependências
+
+As dependências estão em `requirements.txt`:
+
+- `yt-dlp` para pesquisar vídeos no YouTube.
+- `qrcode` e `pillow` para gerar os QR codes.
+
+## Licença
+
+Este projeto está disponível sob a licença [MIT](LICENSE).
