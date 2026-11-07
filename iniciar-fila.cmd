@@ -18,12 +18,14 @@ if not defined PY_CMD goto ask_python
 %PY_CMD% -m pip --version >nul 2>&1
 if errorlevel 1 goto ask_pip_install
 set "PIP_OUTDATED=%TEMP%\fila_pip_outdated.json"
-%PY_CMD% -m pip list --outdated --format=json > "%PIP_OUTDATED%" 2>nul
-if errorlevel 1 set "PIP_NEEDS_UPDATE=1"
-if not defined PIP_NEEDS_UPDATE (
-    findstr /i /c:"\"name\": \"pip\"" "%PIP_OUTDATED%" >nul 2>&1
-    if not errorlevel 1 set "PIP_NEEDS_UPDATE=1"
+%PY_CMD% -m pip list --outdated --format=json --timeout 5 > "%PIP_OUTDATED%" 2>nul
+if errorlevel 1 (
+    echo Nao foi possivel consultar atualizacoes do pip agora; mantendo a versao instalada.
+    del /q "%PIP_OUTDATED%" >nul 2>&1
+    goto check_dependencies
 )
+findstr /i /c:"\"name\": \"pip\"" "%PIP_OUTDATED%" >nul 2>&1
+if not errorlevel 1 set "PIP_NEEDS_UPDATE=1"
 del /q "%PIP_OUTDATED%" >nul 2>&1
 if not defined PIP_NEEDS_UPDATE goto check_dependencies
 
@@ -46,8 +48,8 @@ goto check_dependencies
 :check_dependencies
 set "NEED_DEPS=0"
 set "DEPS_OUTDATED=%TEMP%\fila_dependencies_outdated.json"
-%PY_CMD% -m pip list --outdated --format=json > "%DEPS_OUTDATED%" 2>nul
-if errorlevel 1 set "NEED_DEPS=1"
+%PY_CMD% -m pip list --outdated --format=json --timeout 5 > "%DEPS_OUTDATED%" 2>nul
+if errorlevel 1 echo Nao foi possivel verificar atualizacoes online; verificando apenas dependencias ausentes.
 for %%P in (yt-dlp qrcode pillow) do (
     %PY_CMD% -m pip show %%P >nul 2>&1
     if errorlevel 1 (
