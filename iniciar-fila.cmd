@@ -24,7 +24,7 @@ if errorlevel 1 (
     del /q "%PIP_OUTDATED%" >nul 2>&1
     goto check_dependencies
 )
-findstr /i /c:"\"name\": \"pip\"" "%PIP_OUTDATED%" >nul 2>&1
+%PY_CMD% -c "import json,pathlib; p=pathlib.Path(r'%PIP_OUTDATED%'); d=json.loads(p.read_text(encoding='utf-8')) if p.exists() and p.stat().st_size else []; raise SystemExit(0 if any(str(x.get('name','')).lower() == 'pip' for x in d) else 1)" >nul 2>&1
 if not errorlevel 1 set "PIP_NEEDS_UPDATE=1"
 del /q "%PIP_OUTDATED%" >nul 2>&1
 if not defined PIP_NEEDS_UPDATE goto check_dependencies
@@ -56,7 +56,7 @@ for %%P in (yt-dlp qrcode pillow) do (
         echo Dependencia ausente: %%P
         set "NEED_DEPS=1"
     ) else (
-        findstr /i /c:"\"name\": \"%%P\"" "%DEPS_OUTDATED%" >nul 2>&1
+        %PY_CMD% -c "import json,pathlib; p=pathlib.Path(r'%DEPS_OUTDATED%'); d=json.loads(p.read_text(encoding='utf-8')) if p.exists() and p.stat().st_size else []; raise SystemExit(0 if any(str(x.get('name','')).lower() == '%%P'.lower() for x in d) else 1)" >nul 2>&1
         if not errorlevel 1 (
             echo Dependencia desatualizada: %%P
             set "NEED_DEPS=1"
