@@ -12,9 +12,72 @@ if not defined PY_CMD (
     where python >nul 2>&1
     if not errorlevel 1 set "PY_CMD=python"
 )
-
 if not defined PY_CMD goto ask_python
+
+:check_pip
+%PY_CMD% -m pip --version >nul 2>&1
+if errorlevel 1 goto ask_pip_install
+set "PIP_OUTDATED=%TEMP%\fila_pip_outdated.json"
+%PY_CMD% -m pip list --outdated --format=json > "%PIP_OUTDATED%" 2>nul
+if errorlevel 1 set "PIP_NEEDS_UPDATE=1"
+if not defined PIP_NEEDS_UPDATE (
+    findstr /i /c:"\"name\": \"pip\"" "%PIP_OUTDATED%" >nul 2>&1
+    if not errorlevel 1 set "PIP_NEEDS_UPDATE=1"
+)
+del /q "%PIP_OUTDATED%" >nul 2>&1
+if not defined PIP_NEEDS_UPDATE goto check_dependencies
+
+echo.
+echo O pip esta ausente ou desatualizado.
+echo Atualizar o pip e obrigatorio para instalar dependencias corretamente.
+set "ANSWER="
+set /p "ANSWER=Atualizar o pip agora? (y,n): "
+if /i "!ANSWER!"=="y" goto update_pip
+if /i "!ANSWER!"=="n" goto stop_missing
+echo Responda somente y ou n.
 goto check_pip
+
+:update_pip
+%PY_CMD% -m pip install --upgrade pip
+if errorlevel 1 goto install_failed
+set "PIP_NEEDS_UPDATE="
+goto check_dependencies
+
+:check_dependencies
+set "NEED_DEPS=0"
+set "DEPS_OUTDATED=%TEMP%\fila_dependencies_outdated.json"
+%PY_CMD% -m pip list --outdated --format=json > "%DEPS_OUTDATED%" 2>nul
+if errorlevel 1 set "NEED_DEPS=1"
+for %%P in (yt-dlp qrcode pillow) do (
+    %PY_CMD% -m pip show %%P >nul 2>&1
+    if errorlevel 1 (
+        echo Dependencia ausente: %%P
+        set "NEED_DEPS=1"
+    ) else (
+        findstr /i /c:"\"name\": \"%%P\"" "%DEPS_OUTDATED%" >nul 2>&1
+        if not errorlevel 1 (
+            echo Dependencia desatualizada: %%P
+            set "NEED_DEPS=1"
+        )
+    )
+)
+del /q "%DEPS_OUTDATED%" >nul 2>&1
+if "%NEED_DEPS%"=="0" goto check_firewall
+
+echo.
+echo Existem dependencias ausentes ou desatualizadas.
+echo Instalar/atualizar dependencias e obrigatorio para pesquisa e QR codes.
+set "ANSWER="
+set /p "ANSWER=Instalar/atualizar agora? (y,n): "
+if /i "!ANSWER!"=="y" goto install_dependencies
+if /i "!ANSWER!"=="n" goto stop_missing
+echo Responda somente y ou n.
+goto check_dependencies
+
+:install_dependencies
+%PY_CMD% -m pip install --upgrade -r requirements.txt
+if errorlevel 1 goto install_failed
+goto check_firewall
 
 :ask_python
 echo.
@@ -40,34 +103,23 @@ where py >nul 2>&1
 if errorlevel 1 set "PY_CMD=python"
 goto check_pip
 
-:check_pip
+:ask_pip_install
 echo.
-echo O pip sera atualizado. Esta etapa e obrigatoria para instalar as dependencias.
+echo O pip nao esta disponivel neste Python.
+echo O pip e obrigatorio para instalar as dependencias.
 set "ANSWER="
-set /p "ANSWER=Atualizar o pip agora? (y,n): "
-if /i "!ANSWER!"=="y" goto update_pip
+set /p "ANSWER=Instalar o pip agora? (y,n): "
+if /i "!ANSWER!"=="y" goto install_pip
 if /i "!ANSWER!"=="n" goto stop_missing
 echo Responda somente y ou n.
+goto ask_pip_install
+
+:install_pip
+%PY_CMD% -m ensurepip --upgrade
+if errorlevel 1 goto install_failed
 goto check_pip
 
-:update_pip
-%PY_CMD% -m pip install --upgrade pip
-if errorlevel 1 goto install_failed
-
-echo.
-echo As dependencias do projeto serao instaladas ou atualizadas.
-echo Esta etapa e obrigatoria para pesquisa no YouTube e QR codes.
-set "ANSWER="
-set /p "ANSWER=Instalar/atualizar as dependencias? (y,n): "
-if /i "!ANSWER!"=="y" goto install_dependencies
-if /i "!ANSWER!"=="n" goto stop_missing
-echo Responda somente y ou n.
-goto update_pip
-
-:install_dependencies
-%PY_CMD% -m pip install --upgrade -r requirements.txt
-if errorlevel 1 goto install_failed
-
+:check_firewall
 echo.
 echo A porta 8080 permite que celulares acessem a fila.
 netsh advfirewall firewall show rule name="Fila YouTube 8080" >nul 2>&1

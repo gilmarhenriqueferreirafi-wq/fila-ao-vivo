@@ -4,7 +4,7 @@ Servidor local para controlar uma fila de músicas do YouTube em tempo real. Pes
 
 ## O que instalar
 
-No Windows, execute `iniciar-fila.cmd`. O assistente verifica se o Python existe e oferece instalar pelo `winget` caso esteja ausente. Depois ele oferece atualizar o `pip` e instalar/atualizar as dependências do projeto.
+No Windows, execute `iniciar-fila.cmd`. O assistente verifica se o Python existe e oferece instalar pelo `winget` caso esteja ausente. Antes de instalar qualquer coisa, ele verifica se o `pip` e cada dependência estão ausentes ou desatualizados; só oferece a atualização quando necessário.
 
 Todas essas etapas são perguntadas com `(y,n)`. Responder `y` é obrigatório para a função correspondente funcionar:
 
