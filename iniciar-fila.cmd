@@ -47,23 +47,8 @@ goto check_dependencies
 
 :check_dependencies
 set "NEED_DEPS=0"
-set "DEPS_OUTDATED=%TEMP%\fila_dependencies_outdated.json"
-%PY_CMD% -m pip list --outdated --format=json --timeout 5 > "%DEPS_OUTDATED%" 2>nul
-if errorlevel 1 echo Nao foi possivel verificar atualizacoes online; verificando apenas dependencias ausentes.
-for %%P in (yt-dlp qrcode pillow) do (
-    %PY_CMD% -m pip show %%P >nul 2>&1
-    if errorlevel 1 (
-        echo Dependencia ausente: %%P
-        set "NEED_DEPS=1"
-    ) else (
-        %PY_CMD% -c "import json,pathlib; p=pathlib.Path(r'%DEPS_OUTDATED%'); d=json.loads(p.read_text(encoding='utf-8')) if p.exists() and p.stat().st_size else []; raise SystemExit(0 if any(str(x.get('name','')).lower() == '%%P'.lower() for x in d) else 1)" >nul 2>&1
-        if not errorlevel 1 (
-            echo Dependencia desatualizada: %%P
-            set "NEED_DEPS=1"
-        )
-    )
-)
-del /q "%DEPS_OUTDATED%" >nul 2>&1
+%PY_CMD% -c "import importlib.metadata as m; from packaging.requirements import Requirement; from pathlib import Path; bad=[]; lines=[x.strip() for x in Path('requirements.txt').read_text(encoding='utf-8').splitlines() if x.strip() and not x.startswith('#')]; [bad.append(r.name) for r in map(Requirement, lines) if not (m.version(r.name) in r.specifier)]; print('Dependencias ausentes ou abaixo da versao minima: ' + ', '.join(bad)) if bad else None; raise SystemExit(0 if bad else 1)"
+if not errorlevel 1 set "NEED_DEPS=1"
 if "%NEED_DEPS%"=="0" goto check_firewall
 
 echo.
