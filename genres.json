@@ -1,0 +1,19 @@
+{
+  "pagode": {"label": "Pagode", "artistas": ["Menos É Mais", "Dilsinho", "Ferrugem", "Sorriso Maroto", "Thiaguinho"]},
+  "sertanejo": {"label": "Sertanejo", "artistas": ["Jorge e Mateus", "Henrique e Juliano", "Ana Castela", "Gusttavo Lima", "Maiara e Maraisa"]},
+  "funk": {"label": "Funk brasileiro", "artistas": ["MC Ryan SP", "MC Hariel", "Ludmilla", "Anitta", "MC Kevin"]},
+  "mpb": {"label": "MPB", "artistas": ["Gilberto Gil", "Djavan", "Marisa Monte", "Seu Jorge", "Jorge Ben Jor"]},
+  "rock": {"label": "Rock brasileiro", "artistas": ["Titãs", "Legião Urbana", "Charlie Brown Jr.", "Capital Inicial", "Pitty"]},
+  "forro": {"label": "Forró", "artistas": ["Wesley Safadão", "Calcinha Preta", "Zé Vaqueiro", "Mastruz com Leite", "Xand Avião"]},
+  "samba": {"label": "Samba", "artistas": ["Martinho da Vila", "Beth Carvalho", "Paulinho da Viola", "Zeca Pagodinho", "Alcione"]},
+  "bossa_nova": {"label": "Bossa nova", "artistas": ["Tom Jobim", "João Gilberto", "Nara Leão", "Astrud Gilberto", "Vinicius de Moraes"]},
+  "axe": {"label": "Axé", "artistas": ["Ivete Sangalo", "Claudia Leitte", "Bell Marques", "Daniela Mercury", "É O Tchan"]},
+  "piseiro": {"label": "Piseiro", "artistas": ["João Gomes", "Tarcísio do Acordeon", "Vitor Fernandes", "Barões da Pisadinha", "Zé Vaqueiro"]},
+  "arrocha": {"label": "Arrocha", "artistas": ["Pablo", "Silvanno Salles", "Tayrone", "Unha Pintada", "Toque Dez"]},
+  "trap": {"label": "Trap brasileiro", "artistas": ["Matuê", "Veigh", "Teto", "Oruam", "KayBlack"]},
+  "rap": {"label": "Rap e hip hop", "artistas": ["Racionais MC's", "Emicida", "Criolo", "Sabotage", "BK"]},
+  "gospel": {"label": "Gospel", "artistas": ["Aline Barros", "Fernandinho", "Gabriela Rocha", "Anderson Freire", "Renascer Praise"]},
+  "reggae": {"label": "Reggae", "artistas": ["Natiruts", "Cidade Negra", "Maneva", "Armandinho", "Ponto de Equilíbrio"]},
+  "tecnobrega": {"label": "Tecnobrega", "artistas": ["Gaby Amarantos", "Calypso", "Banda UÓ", "Joelma", "Pabllo Vittar"]},
+  "indie": {"label": "Indie brasileiro", "artistas": ["O Terno", "Boogarins", "Terno Rei", "Maglore", "Supercombo"]}
+}

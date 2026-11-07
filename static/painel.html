@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fila — painel compacto</title><link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/queue.css"></head>
+<body class="mini-panel">
+  <main class="mini-screen">
+    <div class="mini-heading"><span class="brand-dot"></span><span>FILA AO VIVO</span><small>PAINEL COMPACTO</small><button id="fullscreen-btn" type="button">Tela cheia</button></div>
+    <div class="mini-status">TOCANDO AGORA</div>
+    <section class="mini-current"><div class="mini-media"><img id="mini-thumbnail" src="" alt="Miniatura da música atual"><div id="player" class="mini-player-engine" aria-hidden="true"></div></div><div><strong id="mini-title">Nenhuma música tocando</strong><small id="mini-channel">A fila está vazia</small></div></section>
+  </main>
+  <footer class="mini-progress-bar"><div class="mini-times"><span id="mini-elapsed">0:00</span><span id="mini-duration">0:00</span></div><div class="mini-track"><div id="mini-progress"></div></div></footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>

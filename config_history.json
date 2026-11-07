@@ -1,0 +1,118 @@
+[
+  {
+    "timestamp": "2026-11-07T02:18:57.905307+00:00",
+    "category": "genres",
+    "values": {
+      "selected_genres": [
+        "pagode",
+        "sertanejo",
+        "funk",
+        "mpb",
+        "rock",
+        "forro",
+        "samba",
+        "bossa_nova",
+        "axe",
+        "piseiro",
+        "arrocha",
+        "trap",
+        "rap",
+        "gospel",
+        "reggae",
+        "tecnobrega",
+        "indie"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-11-07T02:18:57.912775+00:00",
+    "category": "queue",
+    "values": {
+      "repeat": false,
+      "shuffle": false,
+      "auto_play": true,
+      "random_on_empty": true
+    }
+  },
+  {
+    "timestamp": "2026-11-07T02:27:17.864675+00:00",
+    "category": "genres",
+    "values": {
+      "selected_genres": [
+        "pagode",
+        "sertanejo",
+        "forro",
+        "samba",
+        "piseiro",
+        "arrocha"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-11-07T02:27:17.899893+00:00",
+    "category": "queue",
+    "values": {
+      "repeat": false,
+      "shuffle": false,
+      "auto_play": true,
+      "random_on_empty": true
+    }
+  },
+  {
+    "timestamp": "2026-11-07T03:17:59.565579+00:00",
+    "category": "genres",
+    "values": {
+      "selected_genres": [
+        "reggae"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-11-07T03:17:59.571046+00:00",
+    "category": "queue",
+    "values": {
+      "repeat": false,
+      "shuffle": false,
+      "auto_play": true,
+      "random_on_empty": true
+    }
+  },
+  {
+    "timestamp": "2026-11-07T03:21:20.775999+00:00",
+    "category": "genres",
+    "values": {
+      "selected_genres": [
+        "reggae"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-11-07T03:21:20.783942+00:00",
+    "category": "queue",
+    "values": {
+      "repeat": false,
+      "shuffle": false,
+      "auto_play": true,
+      "random_on_empty": true
+    }
+  },
+  {
+    "timestamp": "2026-11-07T03:28:11.492633+00:00",
+    "category": "genres",
+    "values": {
+      "selected_genres": [
+        "reggae"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-11-07T03:28:11.496914+00:00",
+    "category": "queue",
+    "values": {
+      "repeat": false,
+      "shuffle": false,
+      "auto_play": true,
+      "random_on_empty": true
+    }
+  }
+]

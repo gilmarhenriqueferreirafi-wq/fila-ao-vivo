@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.env
+.pytest_cache/
+.mypy_cache/
+.idea/
+.vscode/
+*.log
+Thumbs.db
+desktop.ini
